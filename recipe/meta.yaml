@@ -24,6 +24,7 @@ requirements:
     - param >=1.7.0
     - pyct >=0.4.4
     - setuptools >=30.3.0
+    - wheel
   run:
     - python >=3.7
     - panel >=0.11
@@ -50,10 +51,15 @@ about:
     and data visualization libraries available in the PyData ecosystem.
   license: BSD-3-Clause
   license_file: LICENSE
+  license_url: https://github.com/holoviz/lumen/blob/master/LICENSE
+  license_family: BSD
   doc_url: https://lumen.holoviz.org/
+  doc_source_url: https://github.com/holoviz/lumen/tree/master/docs
   dev_url: https://github.com/holoviz/lumen
 
 extra:
+  skip-lints:
+    - avoid_noarch
   recipe-maintainers:
     - Hoxbro
     - philippjfr
