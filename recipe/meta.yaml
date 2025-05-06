@@ -56,6 +56,7 @@ about:
     and data visualization libraries available in the PyData ecosystem.
   license: BSD-3-Clause
   license_file: LICENSE
+  license_family: BSD
   doc_url: https://lumen.holoviz.org/
   dev_url: https://github.com/holoviz/lumen
 
