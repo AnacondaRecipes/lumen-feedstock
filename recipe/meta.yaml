@@ -20,7 +20,6 @@ requirements:
   host:
     - python
     - pip
-    - setuptools >=30.3.0
     - hatchling
     - hatch-vcs
   run:
