@@ -42,10 +42,22 @@ requirements:
     - llama-cpp-python >=0.3.0
 
 test:
+  source_files:
+    - lumen/tests
   imports:
     - lumen
+    - lumen.auth
+    - lumen.command
+    - lumen.tests
+    - lumen.util
+    - lumen.validation
+    - lumen.views
   requires:
     - pip
+    - pydantic
+    - duckdb
+    - instructor
+    - griffe
   commands:
     - pip check
     - lumen --help
