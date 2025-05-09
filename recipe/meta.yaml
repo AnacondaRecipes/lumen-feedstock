@@ -35,6 +35,11 @@ requirements:
     - packaging
     - param >=1.9.0
     - sqlglot
+  run_contrainted:
+    - instructor >=1.6.4
+    - pydantic >=2.8.0
+    - panel-graphic-walker >=0.6.4
+    - llama-cpp-python >=0.3.0
 
 test:
   imports:
