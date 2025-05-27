@@ -35,6 +35,9 @@ requirements:
     - packaging
     - param >=1.9.0
     - sqlglot
+    - pydantic-extra-types
+    - jsonschema
+    - nbformat
   run_contrainted:
     - instructor >=1.6.4
     - pydantic >=2.8.0
@@ -46,6 +49,7 @@ test:
     - lumen/tests
   imports:
     - lumen
+    - lumen.ai
     - lumen.auth
     - lumen.command
     - lumen.tests
@@ -58,9 +62,17 @@ test:
     - duckdb
     - instructor
     - griffe
+    - pydantic-extra-types
+    - jsonschema
+    - nbformat
   commands:
     - pip check
     - lumen --help
+
+# ai-local = ['lumen[ai]', 'huggingface_hub']
+# ai-openai = ['lumen[ai]', 'openai']
+# ai-mistralai = ['lumen[ai]', 'mistralai']
+# ai-anthropic = ['lumen[ai]', 'anthropic']
 
 about:
   home: https://github.com/holoviz/lumen
