@@ -11,22 +11,23 @@ source:
 
 build:
   number: 0
-  skip: True  # [py<310]
+
 
 outputs:
   - name: {{ name|lower }}
     build:
       entry_points:
         - lumen = lumen.command:main
+      skip: True  # [py<310]
       script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
     requirements:
       host:
-        - python >=3.10
+        - python
         - pip
         - hatchling
         - hatch-vcs
       run:
-        - python >=3.10
+        - python
         - panel >=1.5.0
         - hvplot
         - holoviews >=1.17.0
@@ -85,11 +86,14 @@ outputs:
       dev_url: https://github.com/holoviz/lumen
 
   - name: {{ name|lower }}-ai-local
+    build:
+      skip: True  # [py<310]
+      script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
     requirements:
       host:
-        - python >=3.10
+        - python
       run:
-        - python >=3.10
+        - python
         - {{ pin_subpackage('lumen', exact=True) }}
         - huggingface_hub
     test:
@@ -104,11 +108,14 @@ outputs:
       license_family: BSD
 
   - name: {{ name|lower }}-ai-openai
+    build:
+      skip: True  # [py<310]
+      script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
     requirements:
       host:
-        - python >=3.10
+        - python
       run:
-        - python >=3.10
+        - python
         - {{ pin_subpackage('lumen', exact=True) }}
         - openai
     test:
@@ -123,11 +130,14 @@ outputs:
       license_family: BSD
 
   - name: {{ name|lower }}-ai-mistralai
+    build:
+      skip: True  # [py<310]
+      script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
     requirements:
       host:
-        - python >=3.10
+        - python
       run:
-        - python >=3.10
+        - python
         - {{ pin_subpackage('lumen', exact=True) }}
         - mistralai
     test:
@@ -142,11 +152,14 @@ outputs:
       license_family: BSD
 
   - name: {{ name|lower }}-ai-anthropic
+    build:
+      skip: True  # [py<310]
+      script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
     requirements:
       host:
-        - python >=3.10
+        - python
       run:
-        - python >=3.10
+        - python
         - {{ pin_subpackage('lumen', exact=True) }}
         - anthropic
     test:
