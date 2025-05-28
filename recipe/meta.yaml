@@ -92,6 +92,7 @@ outputs:
     requirements:
       host:
         - python
+        - pip
       run:
         - python
         - {{ pin_subpackage('lumen', exact=True) }}
@@ -114,6 +115,7 @@ outputs:
     requirements:
       host:
         - python
+        - pip
       run:
         - python
         - {{ pin_subpackage('lumen', exact=True) }}
@@ -136,6 +138,7 @@ outputs:
     requirements:
       host:
         - python
+        - pip
       run:
         - python
         - {{ pin_subpackage('lumen', exact=True) }}
@@ -158,6 +161,7 @@ outputs:
     requirements:
       host:
         - python
+        - pip
       run:
         - python
         - {{ pin_subpackage('lumen', exact=True) }}
