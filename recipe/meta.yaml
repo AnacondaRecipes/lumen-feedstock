@@ -21,12 +21,12 @@ outputs:
       script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
     requirements:
       host:
-        - python
+        - python >=3.10
         - pip
         - hatchling
         - hatch-vcs
       run:
-        - python
+        - python >=3.10
         - panel >=1.5.0
         - hvplot
         - holoviews >=1.17.0
@@ -87,9 +87,9 @@ outputs:
   - name: {{ name|lower }}-ai-local
     requirements:
       host:
-        - python
+        - python >=3.10
       run:
-        - python
+        - python >=3.10
         - {{ pin_subpackage('lumen', exact=True) }}
         - huggingface_hub
     test:
@@ -106,9 +106,9 @@ outputs:
   - name: {{ name|lower }}-ai-openai
     requirements:
       host:
-        - python
+        - python >=3.10
       run:
-        - python
+        - python >=3.10
         - {{ pin_subpackage('lumen', exact=True) }}
         - openai
     test:
@@ -125,9 +125,9 @@ outputs:
   - name: {{ name|lower }}-ai-mistralai
     requirements:
       host:
-        - python
+        - python >=3.10
       run:
-        - python
+        - python >=3.10
         - {{ pin_subpackage('lumen', exact=True) }}
         - mistralai
     test:
@@ -144,9 +144,9 @@ outputs:
   - name: {{ name|lower }}-ai-anthropic
     requirements:
       host:
-        - python
+        - python >=3.10
       run:
-        - python
+        - python >=3.10
         - {{ pin_subpackage('lumen', exact=True) }}
         - anthropic
     test:
