@@ -94,7 +94,7 @@ outputs:
         - pip
       run:
         - python
-        - {{ pin_subpackage('lumen', exact=True) }}
+        - {{ pin_subpackage('lumen-ai', exact=True) }}
         - huggingface_hub
     test:
       requires:
