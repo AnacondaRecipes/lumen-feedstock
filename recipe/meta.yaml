@@ -12,7 +12,6 @@ source:
 build:
   number: 0
 
-
 outputs:
   - name: {{ name|lower }}
     build:
@@ -85,7 +84,7 @@ outputs:
       doc_url: https://lumen.holoviz.org/
       dev_url: https://github.com/holoviz/lumen
 
-  - name: {{ name|lower }}-ai-local
+  - name: {{ name|lower }}-ai
     build:
       skip: True  # [py<310]
     requirements:
@@ -95,6 +94,38 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('lumen', exact=True) }}
+        - griffe
+        - nbformat
+        - duckdb >=1.2.0
+        - pyarrow
+        - instructor >=1.6.4
+        - pydantic >=2.8.0
+        - pydantic-extra-types
+        - panel-graphic-walker >=0.6.4
+        - markitdown
+        - tiktoken
+        - chardet
+    test:
+      requires:
+        - pip
+      commands:
+        - pip check
+    about:
+      home: https://github.com/holoviz/lumen
+      summary: 'Lumen with AI capabilities'
+      license: BSD-3-Clause
+      license_family: BSD
+
+  - name: {{ name|lower }}-ai-local
+    build:
+      skip: True  # [py<310]
+    requirements:
+      host:
+        - python
+        - pip
+      run:
+        - python
+        - {{ pin_subpackage('lumen-ai', exact=True) }}
         - huggingface_hub
     test:
       requires:
@@ -116,7 +147,7 @@ outputs:
         - pip
       run:
         - python
-        - {{ pin_subpackage('lumen', exact=True) }}
+        - {{ pin_subpackage('lumen-ai', exact=True) }}
         - openai
     test:
       requires:
@@ -138,7 +169,7 @@ outputs:
         - pip
       run:
         - python
-        - {{ pin_subpackage('lumen', exact=True) }}
+        - {{ pin_subpackage('lumen-ai', exact=True) }}
         - mistralai
     test:
       requires:
@@ -160,7 +191,7 @@ outputs:
         - pip
       run:
         - python
-        - {{ pin_subpackage('lumen', exact=True) }}
+        - {{ pin_subpackage('lumen-ai', exact=True) }}
         - anthropic
     test:
       requires:
