@@ -83,6 +83,13 @@ outputs:
       license_family: BSD
       doc_url: https://lumen.holoviz.org/
       dev_url: https://github.com/holoviz/lumen
+# This recipe builds multiple outputs:
+# - lumen: The main package with core functionality
+# - lumen-ai: Package with all AI dependencies (except provider-specific ones)
+# - lumen-ai-local: Metapackage that adds huggingface_hub for local AI models
+# - lumen-ai-openai: Metapackage that adds OpenAI support
+# - lumen-ai-mistralai: Metapackage that adds MistralAI support
+# - lumen-ai-anthropic: Metapackage that adds Anthropic support
 
   - name: {{ name|lower }}-ai
     build:
