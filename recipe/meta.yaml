@@ -100,7 +100,7 @@ outputs:
         - pip
       run:
         - python
-        - {{ pin_subpackage('lumen-ai', exact=True) }}
+        - {{ pin_subpackage('lumen', exact=True) }}
         - griffe
         - nbformat
         - duckdb >=1.2.0
