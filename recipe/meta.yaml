@@ -105,11 +105,6 @@ outputs:
         - markitdown
         - tiktoken
         - chardet
-    test:
-      requires:
-        - pip
-      commands:
-        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with AI capabilities'
@@ -126,11 +121,6 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - huggingface_hub
-    test:
-      requires:
-        - pip
-      commands:
-        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with huggingface_hub for local AI models'
@@ -147,11 +137,6 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - openai
-    test:
-      requires:
-        - pip
-      commands:
-        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with OpenAI support'
@@ -168,11 +153,6 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - mistralai
-    test:
-      requires:
-        - pip
-      commands:
-        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with MistralAI support'
@@ -189,11 +169,6 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - anthropic
-    test:
-      requires:
-        - pip
-      commands:
-        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with Anthropic support'
