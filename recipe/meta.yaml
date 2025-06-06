@@ -47,9 +47,11 @@ outputs:
         - panel-graphic-walker >=0.6.4
         - llama-cpp-python >=0.3.0
     test:
+      # source_files:
+      #   - lumen/tests
       imports:
         - lumen
-        - lumen.ai
+        # - lumen.ai
         - lumen.auth
         - lumen.command
         - lumen.tests
@@ -58,6 +60,13 @@ outputs:
         - lumen.views
       requires:
         - pip
+        # - pydantic
+        # - duckdb
+        # - instructor
+        # - griffe
+        # - pydantic-extra-types
+        # - jsonschema
+        # - nbformat
       commands:
         - pip check
         - lumen --help
@@ -103,6 +112,8 @@ outputs:
         - pydantic-extra-types
         - panel-graphic-walker >=0.6.4
         - markitdown
+        - tiktoken
+        - chardet
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with AI capabilities'
