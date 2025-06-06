@@ -47,8 +47,6 @@ outputs:
         - panel-graphic-walker >=0.6.4
         - llama-cpp-python >=0.3.0
     test:
-      source_files:
-        - lumen/tests
       imports:
         - lumen
         - lumen.ai
