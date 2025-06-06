@@ -58,13 +58,6 @@ outputs:
         - lumen.views
       requires:
         - pip
-        - pydantic
-        - duckdb
-        - instructor
-        - griffe
-        - pydantic-extra-types
-        - jsonschema
-        - nbformat
       commands:
         - pip check
         - lumen --help
