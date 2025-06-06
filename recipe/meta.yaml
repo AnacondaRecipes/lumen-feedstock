@@ -103,8 +103,6 @@ outputs:
         - pydantic-extra-types
         - panel-graphic-walker >=0.6.4
         - markitdown
-        - tiktoken
-        - chardet
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with AI capabilities'
