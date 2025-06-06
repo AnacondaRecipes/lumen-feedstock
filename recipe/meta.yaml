@@ -38,7 +38,6 @@ outputs:
         - packaging
         - param >=1.9.0
         - sqlglot
-        - pydantic-extra-types
         - nbformat
       run_constrained:
         - instructor >=1.6.4
