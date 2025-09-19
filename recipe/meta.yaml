@@ -1,13 +1,13 @@
 {% set name = "lumen" %}
-{% set version = "0.9.0" %}
+{% set version = "0.10.1" %}
 
 package:
   name: {{ name|lower }}-bundle
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 575a9ef9444eda55a087c0201345d12ce1743f702538cf3170803a4c57d671e6
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 4ab077bf87357649c3b75a1776ab9655b246b766efddf96e5dbefaab3781b568
 
 build:
   number: 0
@@ -27,7 +27,7 @@ outputs:
         - hatch-vcs
       run:
         - python
-        - panel >=1.5.0
+        - panel >=1.6.3
         - hvplot
         - holoviews >=1.17.0
         - pandas
