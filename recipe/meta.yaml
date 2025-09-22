@@ -112,6 +112,8 @@ outputs:
         - tiktoken
         - chardet
         - semchunk
+        - gw-dsl-parser
+        - pygwalker >=0.4.9.11
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with AI capabilities'
