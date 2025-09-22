@@ -17,7 +17,7 @@ outputs:
     build:
       entry_points:
         - lumen = lumen.command:main
-      skip: True  # [py<310]
+      skip: true  # [py<310]
       script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
     requirements:
@@ -120,7 +120,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-local
     build:
-      skip: true
+      skip: true  # [py<310]
     requirements:
       host:
         - python
@@ -136,7 +136,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-openai
     build:
-      skip: true
+      skip: true  # [py<310]
     requirements:
       host:
         - python
@@ -152,7 +152,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-mistralai
     build:
-      skip: true
+      skip: true  # [py<310]
     requirements:
       host:
         - python
@@ -168,7 +168,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-anthropic
     build:
-      skip: true
+      skip: true  # [py<310]
     requirements:
       host:
         - python
