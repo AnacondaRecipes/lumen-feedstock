@@ -44,6 +44,7 @@ outputs:
         - pydantic >=2.8.0
         - panel-graphic-walker >=0.6.4
         - llama-cpp-python >=0.3.0
+        - duckdb >=1.2.0
     test:
       # source_files:
       #   - lumen/tests
@@ -110,6 +111,7 @@ outputs:
         - markitdown
         - tiktoken
         - chardet
+        - semchunk
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with AI capabilities'
