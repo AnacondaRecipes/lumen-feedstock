@@ -88,8 +88,6 @@ outputs:
 # - lumen-ai-openai: Metapackage that adds OpenAI support
 # - lumen-ai-mistralai: Metapackage that adds MistralAI support
 # - lumen-ai-anthropic: Metapackage that adds Anthropic support
-# Until all of the neccesary panel-graphic-walker[kernel] packages are available in defaults,
-#  it has been decided to skip the builds for all of Lumen's additional AI outputs.
 
   - name: {{ name|lower }}-ai
     build:
