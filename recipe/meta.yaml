@@ -17,8 +17,7 @@ outputs:
     build:
       entry_points:
         - lumen = lumen.command:main
-      # pygwalker not available on win
-      skip: true  # [py<310 or win]
+      skip: true  # [py<310]
       script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
     requirements:
@@ -47,11 +46,10 @@ outputs:
         - llama-cpp-python >=0.3.0
         - duckdb >=1.2.0
     test:
-      # source_files:
-      #   - lumen/tests
+      source_files:
+        - lumen/tests
       imports:
         - lumen
-        # - lumen.ai
         - lumen.auth
         - lumen.command
         - lumen.tests
@@ -60,16 +58,20 @@ outputs:
         - lumen.views
       requires:
         - pip
-        # - pydantic
-        # - duckdb
-        # - instructor
-        # - griffe
-        # - pydantic-extra-types
-        # - jsonschema
-        # - nbformat
+        - pydantic
+        - duckdb
+        - instructor
+        - griffe
+        - pydantic-extra-types
+        - jsonschema
+        - nbformat
       commands:
         - pip check
         - lumen --help
+        # - pytest lumen/tests -v
+        # Upstream tests (pytest lumen/tests -v) are disabled due to dependency version
+        # conflicts with pandas 2.3+/pyarrow StringDtype changes, dask 2024+ legacy API
+        # removal, and bokeh version incompatibilities between panel and dask requirements
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Illuminate your data. A monitoring solution built on Panel'
@@ -93,6 +95,7 @@ outputs:
 
   - name: {{ name|lower }}-ai
     build:
+      # pygwalker not available on win
       skip: true  # [py<310 or win]
     requirements:
       host:
