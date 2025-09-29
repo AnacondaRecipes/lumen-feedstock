@@ -17,6 +17,7 @@ outputs:
     build:
       entry_points:
         - lumen = lumen.command:main
+      # pygwalker not available on win
       skip: true  # [py<310 or win]
       script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
