@@ -92,7 +92,7 @@ outputs:
 
   - name: {{ name|lower }}-ai
     build:
-      skip: true  # [py<310]
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
@@ -122,7 +122,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-local
     build:
-      skip: true  # [py<310]
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
@@ -138,7 +138,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-openai
     build:
-      skip: true  # [py<310]
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
@@ -154,7 +154,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-mistralai
     build:
-      skip: true  # [py<310]
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
@@ -170,7 +170,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-anthropic
     build:
-      skip: true  # [py<310]
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
