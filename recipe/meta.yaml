@@ -92,7 +92,7 @@ outputs:
 
   - name: {{ name|lower }}-ai
     build:
-      skip: true  # [py<310]
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
