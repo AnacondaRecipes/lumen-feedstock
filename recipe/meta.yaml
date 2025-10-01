@@ -1,13 +1,13 @@
 {% set name = "lumen" %}
-{% set version = "0.9.0" %}
+{% set version = "0.10.1" %}
 
 package:
   name: {{ name|lower }}-bundle
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 575a9ef9444eda55a087c0201345d12ce1743f702538cf3170803a4c57d671e6
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 4ab077bf87357649c3b75a1776ab9655b246b766efddf96e5dbefaab3781b568
 
 build:
   number: 0
@@ -17,8 +17,9 @@ outputs:
     build:
       entry_points:
         - lumen = lumen.command:main
-      skip: True  # [py<310]
+      skip: true  # [py<310]
       script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
+
     requirements:
       host:
         - python
@@ -27,7 +28,7 @@ outputs:
         - hatch-vcs
       run:
         - python
-        - panel >=1.5.0
+        - panel >=1.6.3
         - hvplot
         - holoviews >=1.17.0
         - pandas
@@ -43,12 +44,12 @@ outputs:
         - pydantic >=2.8.0
         - panel-graphic-walker >=0.6.4
         - llama-cpp-python >=0.3.0
+        - duckdb >=1.2.0
     test:
-      # source_files:
-      #   - lumen/tests
+      source_files:
+        - lumen/tests
       imports:
         - lumen
-        # - lumen.ai
         - lumen.auth
         - lumen.command
         - lumen.tests
@@ -57,16 +58,20 @@ outputs:
         - lumen.views
       requires:
         - pip
-        # - pydantic
-        # - duckdb
-        # - instructor
-        # - griffe
-        # - pydantic-extra-types
-        # - jsonschema
-        # - nbformat
+        - pydantic
+        - duckdb
+        - instructor
+        - griffe
+        - pydantic-extra-types
+        - jsonschema
+        - nbformat
       commands:
         - pip check
         - lumen --help
+        # - pytest lumen/tests -v
+        # Upstream tests (pytest lumen/tests -v) are disabled due to dependency version
+        # conflicts with pandas 2.3+/pyarrow StringDtype changes, dask 2024+ legacy API
+        # removal, and bokeh version incompatibilities between panel and dask requirements
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Illuminate your data. A monitoring solution built on Panel'
@@ -87,12 +92,11 @@ outputs:
 # - lumen-ai-openai: Metapackage that adds OpenAI support
 # - lumen-ai-mistralai: Metapackage that adds MistralAI support
 # - lumen-ai-anthropic: Metapackage that adds Anthropic support
-# Until all of the neccesary panel-graphic-walker[kernel] packages are available in defaults,
-#  it has been decided to skip the builds for all of Lumen's additional AI outputs.
 
   - name: {{ name|lower }}-ai
     build:
-      skip: True
+      # pygwalker not available on win
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
@@ -108,9 +112,11 @@ outputs:
         - pydantic >=2.8.0
         - pydantic-extra-types
         - panel-graphic-walker >=0.6.4
+        - pygwalker >=0.4.9.11
         - markitdown
         - tiktoken
         - chardet
+        - semchunk
     about:
       home: https://github.com/holoviz/lumen
       summary: 'Lumen with AI capabilities'
@@ -119,7 +125,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-local
     build:
-      skip: True
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
@@ -135,7 +141,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-openai
     build:
-      skip: True
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
@@ -151,7 +157,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-mistralai
     build:
-      skip: True
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
@@ -167,7 +173,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-anthropic
     build:
-      skip: True
+      skip: true  # [py<310 or win]
     requirements:
       host:
         - python
