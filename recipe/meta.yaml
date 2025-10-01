@@ -112,7 +112,6 @@ outputs:
         - pydantic >=2.8.0
         - pydantic-extra-types
         - panel-graphic-walker >=0.6.4
-        - gw-dsl-parser
         - pygwalker >=0.4.9.11
         - markitdown
         - tiktoken
