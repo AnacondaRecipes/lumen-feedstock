@@ -114,7 +114,7 @@ outputs:
 
   - name: {{ name|lower }}-ai-openai
     build:
-      skip: true  # [py<311 or win]
+      skip: true  # [py<311]
     requirements:
       host:
         - python
