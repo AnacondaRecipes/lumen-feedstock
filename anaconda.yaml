@@ -2,3 +2,11 @@ anaconda_config_version: 1
 upstream_sources:
   - pypi:
       identifier: lumen
+      packages: &id001
+        - lumen
+        - lumen-ai
+        - lumen-ai-anthropic
+        - lumen-ai-local
+        - lumen-ai-mistralai
+        - lumen-ai-openai
+    packages: *id001
