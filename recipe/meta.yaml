@@ -1,13 +1,19 @@
 {% set name = "lumen" %}
-{% set version = "0.10.1" %}
+{% set version = "1.2.0" %}
 
+# This recipe builds multiple outputs:
+# - lumen: The main package with core functionality
+# - lumen-ai: Package with all AI dependencies (except provider-specific ones)
+# - lumen-ai-local: Metapackage that adds huggingface_hub for local AI models
+# - lumen-ai-openai: Metapackage that adds OpenAI support
+# - lumen-ai-mistralai: Metapackage that adds MistralAI support
 package:
   name: {{ name|lower }}-bundle
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4ab077bf87357649c3b75a1776ab9655b246b766efddf96e5dbefaab3781b568
+  sha256: e0fabf72ce928d6311da8eb811c70a9dfe5ba47e10e7691c8c7b8b0b95e79c20
 
 build:
   number: 0
@@ -19,7 +25,6 @@ outputs:
         - lumen = lumen.command:main
       skip: true  # [py<310]
       script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
-
     requirements:
       host:
         - python
@@ -74,7 +79,7 @@ outputs:
         # removal, and bokeh version incompatibilities between panel and dask requirements
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Illuminate your data. A monitoring solution built on Panel'
+      summary: Illuminate your data. A monitoring solution built on Panel
       description: |
         The Lumen project provides a framework for visual analytics, which allows users to
         build data-driven dashboards from a simple yaml specification. The power of
@@ -85,14 +90,24 @@ outputs:
       license_family: BSD
       doc_url: https://lumen.holoviz.org/
       dev_url: https://github.com/holoviz/lumen
-# This recipe builds multiple outputs:
-# - lumen: The main package with core functionality
-# - lumen-ai: Package with all AI dependencies (except provider-specific ones)
-# - lumen-ai-local: Metapackage that adds huggingface_hub for local AI models
-# - lumen-ai-openai: Metapackage that adds OpenAI support
-# - lumen-ai-mistralai: Metapackage that adds MistralAI support
-# - lumen-ai-anthropic: Metapackage that adds Anthropic support
 
+about:
+  home: https://github.com/holoviz/lumen
+  summary: Illuminate your data. A monitoring solution built on Panel
+  description: |
+    Metapackage for lumen and its variants.
+  license: BSD-3-Clause
+  license_file: LICENSE
+  license_family: BSD
+  doc_url: https://lumen.holoviz.org/
+  dev_url: https://github.com/holoviz/lumen
+
+extra:
+  recipe-maintainers:
+    - Hoxbro
+    - philippjfr
+
+<conda_recipe_manager.types.SentinelType object at 0x7f982191e510>:  # - lumen-ai-anthropic: Metapackage that adds Anthropic support
   - name: {{ name|lower }}-ai
     build:
       # pygwalker not available on win
@@ -119,10 +134,9 @@ outputs:
         - semchunk
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with AI capabilities'
+      summary: Lumen with AI capabilities
       license: BSD-3-Clause
       license_family: BSD
-
   - name: {{ name|lower }}-ai-local
     build:
       skip: true  # [py<310 or win]
@@ -135,10 +149,9 @@ outputs:
         - huggingface_hub
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with huggingface_hub for local AI models'
+      summary: Lumen with huggingface_hub for local AI models
       license: BSD-3-Clause
       license_family: BSD
-
   - name: {{ name|lower }}-ai-openai
     build:
       skip: true  # [py<310 or win]
@@ -151,10 +164,9 @@ outputs:
         - openai
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with OpenAI support'
+      summary: Lumen with OpenAI support
       license: BSD-3-Clause
       license_family: BSD
-
   - name: {{ name|lower }}-ai-mistralai
     build:
       skip: true  # [py<310 or win]
@@ -167,10 +179,9 @@ outputs:
         - mistralai
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with MistralAI support'
+      summary: Lumen with MistralAI support
       license: BSD-3-Clause
       license_family: BSD
-
   - name: {{ name|lower }}-ai-anthropic
     build:
       skip: true  # [py<310 or win]
@@ -183,22 +194,6 @@ outputs:
         - anthropic
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with Anthropic support'
+      summary: Lumen with Anthropic support
       license: BSD-3-Clause
       license_family: BSD
-
-about:
-  home: https://github.com/holoviz/lumen
-  summary: 'Illuminate your data. A monitoring solution built on Panel'
-  description: |
-    Metapackage for lumen and its variants.
-  license: BSD-3-Clause
-  license_file: LICENSE
-  license_family: BSD
-  doc_url: https://lumen.holoviz.org/
-  dev_url: https://github.com/holoviz/lumen
-
-extra:
-  recipe-maintainers:
-    - Hoxbro
-    - philippjfr
