@@ -1,25 +1,33 @@
 {% set name = "lumen" %}
-{% set version = "0.10.1" %}
+{% set version = "1.2.0" %}
+
+# This recipe builds multiple outputs:
+# - lumen: The main package with core functionality
+# - lumen-ai: Package with all AI dependencies (except provider-specific ones)
+# - lumen-ai-local: Metapackage that adds huggingface_hub for local AI models
+# - lumen-ai-openai: Metapackage that adds OpenAI support
+# - lumen-ai-mistralai: Metapackage that adds MistralAI support
+# - lumen-ai-anthropic: Metapackage that adds Anthropic support
 
 package:
-  name: {{ name|lower }}-bundle
+  name: {{ name }}-bundle
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4ab077bf87357649c3b75a1776ab9655b246b766efddf96e5dbefaab3781b568
+  sha256: e0fabf72ce928d6311da8eb811c70a9dfe5ba47e10e7691c8c7b8b0b95e79c20
 
 build:
   number: 0
 
 outputs:
-  - name: {{ name|lower }}
+  # Main lumen package
+  - name: {{ name }}
     build:
       entry_points:
         - lumen = lumen.command:main
-      skip: true  # [py<310]
+      skip: true  # [py<311]
       script: python -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
-
     requirements:
       host:
         - python
@@ -28,23 +36,38 @@ outputs:
         - hatch-vcs
       run:
         - python
-        - panel >=1.6.3
-        - hvplot
-        - holoviews >=1.17.0
-        - pandas
         - bokeh
+        - chardet
+        - duckdb >=1.2.0
+        - gw-dsl-parser
+        - lxml
+        - griffe
+        - holoviews >=1.17.0
+        - hvplot
+        - instructor >=1.14.3
         - intake <2
         - jinja2 >3.0
+        - markitdown
+        - nbformat
         - numpy
         - packaging
-        - param >=1.9.0
-        - sqlglot
-      run_constrained:
-        - instructor >=1.6.4
-        - pydantic >=2.8.0
+        - pandas
+        - panel >=1.7.5
         - panel-graphic-walker >=0.6.4
+        - panel-material-ui >=0.8.1
+        - panel-splitjs >=0.3.2
+        - param >=2.2.1
+        - pyarrow
+        - pydantic >=2.8.0
+        - pydantic-extra-types
+        - semchunk
+        - sqlglot
+        - tabulate
+        - tiktoken
+        - vl-convert-python
+      run_constrained:
         - llama-cpp-python >=0.3.0
-        - duckdb >=1.2.0
+        - pygwalker >=0.4.9.11
     test:
       source_files:
         - lumen/tests
@@ -60,7 +83,6 @@ outputs:
         - pip
         - pydantic
         - duckdb
-        - instructor
         - griffe
         - pydantic-extra-types
         - jsonschema
@@ -74,7 +96,7 @@ outputs:
         # removal, and bokeh version incompatibilities between panel and dask requirements
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Illuminate your data. A monitoring solution built on Panel'
+      summary: Illuminate your data. A monitoring solution built on Panel
       description: |
         The Lumen project provides a framework for visual analytics, which allows users to
         build data-driven dashboards from a simple yaml specification. The power of
@@ -85,18 +107,11 @@ outputs:
       license_family: BSD
       doc_url: https://lumen.holoviz.org/
       dev_url: https://github.com/holoviz/lumen
-# This recipe builds multiple outputs:
-# - lumen: The main package with core functionality
-# - lumen-ai: Package with all AI dependencies (except provider-specific ones)
-# - lumen-ai-local: Metapackage that adds huggingface_hub for local AI models
-# - lumen-ai-openai: Metapackage that adds OpenAI support
-# - lumen-ai-mistralai: Metapackage that adds MistralAI support
-# - lumen-ai-anthropic: Metapackage that adds Anthropic support
 
-  - name: {{ name|lower }}-ai
+  # Lumen with AI capabilities
+  - name: {{ name }}-ai
     build:
-      # pygwalker not available on win
-      skip: true  # [py<310 or win]
+      skip: true  # [py<311 or win]
     requirements:
       host:
         - python
@@ -108,7 +123,7 @@ outputs:
         - nbformat
         - duckdb >=1.2.0
         - pyarrow
-        - instructor >=1.6.4
+        - instructor >=1.14.3
         - pydantic >=2.8.0
         - pydantic-extra-types
         - panel-graphic-walker >=0.6.4
@@ -119,13 +134,14 @@ outputs:
         - semchunk
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with AI capabilities'
+      summary: Lumen with AI capabilities
       license: BSD-3-Clause
       license_family: BSD
 
+  # Lumen with huggingface_hub for local AI models
   - name: {{ name|lower }}-ai-local
     build:
-      skip: true  # [py<310 or win]
+      skip: true  # [py<311 or win]
     requirements:
       host:
         - python
@@ -133,15 +149,17 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - huggingface_hub
+        - hf-xet
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with huggingface_hub for local AI models'
+      summary: Lumen with huggingface_hub for local AI models
       license: BSD-3-Clause
       license_family: BSD
 
+  # Lumen with OpenAI support
   - name: {{ name|lower }}-ai-openai
     build:
-      skip: true  # [py<310 or win]
+      skip: true  # [py<311 or win]
     requirements:
       host:
         - python
@@ -151,13 +169,14 @@ outputs:
         - openai
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with OpenAI support'
+      summary: Lumen with OpenAI support
       license: BSD-3-Clause
       license_family: BSD
 
+  # Lumen with MistralAI support
   - name: {{ name|lower }}-ai-mistralai
     build:
-      skip: true  # [py<310 or win]
+      skip: true  # [py<311 or win]
     requirements:
       host:
         - python
@@ -167,13 +186,14 @@ outputs:
         - mistralai
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with MistralAI support'
+      summary: Lumen with MistralAI support
       license: BSD-3-Clause
       license_family: BSD
 
+  # Lumen with Anthropic support
   - name: {{ name|lower }}-ai-anthropic
     build:
-      skip: true  # [py<310 or win]
+      skip: true  # [py<311 or win]
     requirements:
       host:
         - python
@@ -183,13 +203,13 @@ outputs:
         - anthropic
     about:
       home: https://github.com/holoviz/lumen
-      summary: 'Lumen with Anthropic support'
+      summary: Lumen with Anthropic support
       license: BSD-3-Clause
       license_family: BSD
 
 about:
   home: https://github.com/holoviz/lumen
-  summary: 'Illuminate your data. A monitoring solution built on Panel'
+  summary: Illuminate your data. A monitoring solution built on Panel
   description: |
     Metapackage for lumen and its variants.
   license: BSD-3-Clause
