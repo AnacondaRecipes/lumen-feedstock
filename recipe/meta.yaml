@@ -1,5 +1,5 @@
 {% set name = "lumen" %}
-{% set version = "1.2.0" %}
+{% set version = "1.2.1" %}
 
 # This recipe builds multiple outputs:
 # - lumen: The main package with core functionality
@@ -8,14 +8,13 @@
 # - lumen-ai-openai: Metapackage that adds OpenAI support
 # - lumen-ai-mistralai: Metapackage that adds MistralAI support
 # - lumen-ai-anthropic: Metapackage that adds Anthropic support
-
 package:
   name: {{ name }}-bundle
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: e0fabf72ce928d6311da8eb811c70a9dfe5ba47e10e7691c8c7b8b0b95e79c20
+  sha256: 24d5a4f021ba62602c18885ed6b18478bf8132f2bed7a79b3fa3e27f7f4f7614
 
 build:
   number: 0
@@ -107,7 +106,6 @@ outputs:
       license_family: BSD
       doc_url: https://lumen.holoviz.org/
       dev_url: https://github.com/holoviz/lumen
-
   # Lumen with AI capabilities
   - name: {{ name }}-ai
     build:
@@ -132,12 +130,19 @@ outputs:
         - tiktoken
         - chardet
         - semchunk
+    test:
+      commands:
+        - pip check
+        - pip check
+        - pip check
+        - pip check
+      requires:
+        - pip
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with AI capabilities
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with huggingface_hub for local AI models
   - name: {{ name|lower }}-ai-local
     build:
@@ -150,12 +155,19 @@ outputs:
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - huggingface_hub
         - hf-xet
+    test:
+      commands:
+        - pip check
+        - pip check
+        - pip check
+        - pip check
+      requires:
+        - pip
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with huggingface_hub for local AI models
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with OpenAI support
   - name: {{ name|lower }}-ai-openai
     build:
@@ -167,12 +179,19 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - openai
+    test:
+      commands:
+        - pip check
+        - pip check
+        - pip check
+        - pip check
+      requires:
+        - pip
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with OpenAI support
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with MistralAI support
   - name: {{ name|lower }}-ai-mistralai
     build:
@@ -184,12 +203,19 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - mistralai
+    test:
+      commands:
+        - pip check
+        - pip check
+        - pip check
+        - pip check
+      requires:
+        - pip
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with MistralAI support
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with Anthropic support
   - name: {{ name|lower }}-ai-anthropic
     build:
@@ -201,6 +227,14 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - anthropic
+    test:
+      commands:
+        - pip check
+        - pip check
+        - pip check
+        - pip check
+      requires:
+        - pip
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with Anthropic support
