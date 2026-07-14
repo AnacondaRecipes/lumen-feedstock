@@ -87,6 +87,7 @@ outputs:
         - pytest-xdist
         - lxml
         - sqlalchemy
+        - setuptools
       commands:
         - pip check
         - lumen --help
@@ -110,7 +111,7 @@ outputs:
   # Lumen with AI capabilities - now an alias of lumen
   - name: {{ name }}-ai
     build:
-      skip: true  # [py<311 or win]
+      skip: true  # [py<311]
     requirements:
       host:
         - python
