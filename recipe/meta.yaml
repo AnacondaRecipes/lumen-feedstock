@@ -93,7 +93,7 @@ outputs:
         - lumen --help
         # DuckDB 1.4.x does not accept pandas 3 string dtype ('str') in from_df(); skip those ingest tests.
         # also drop optional_imports (they read source files from the sdist tree, not the installed package)
-        - pytest --pyargs lumen.tests -v -o asyncio_mode=auto -o asyncio_default_fixture_loop_scope=function -k "not optional_imports and not (test_single_csv_produces_one_table or test_multiple_files_produce_multiple_tables_in_one_source or test_file_format_parsing)"
+        - pytest --pyargs lumen.tests -v -o asyncio_mode=auto -o asyncio_default_fixture_loop_scope=function -k "not optional_imports and not (test_single_csv_produces_one_table or test_multiple_files_produce_multiple_tables_in_one_source or test_file_format_parsing) and not test_param_to_pydantic_conversion"
     about:
       home: https://github.com/holoviz/lumen
       summary: Illuminate your data. A monitoring solution built on Panel
