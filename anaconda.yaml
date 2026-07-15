@@ -9,3 +9,6 @@ upstream_sources:
       - lumen-ai-local
       - lumen-ai-mistralai
       - lumen-ai-openai
+      - lumen-ai-bedrock
+      - lumen-ai-transformers
+      - lumen-ai-llama

@@ -1,5 +1,5 @@
 {% set name = "lumen" %}
-{% set version = "1.2.0" %}
+{% set version = "1.2.1" %}
 
 # This recipe builds multiple outputs:
 # - lumen: The main package with core functionality
@@ -15,7 +15,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: e0fabf72ce928d6311da8eb811c70a9dfe5ba47e10e7691c8c7b8b0b95e79c20
+  sha256: 24d5a4f021ba62602c18885ed6b18478bf8132f2bed7a79b3fa3e27f7f4f7614
 
 build:
   number: 0
@@ -39,7 +39,6 @@ outputs:
         - bokeh
         - chardet
         - duckdb >=1.2.0
-        - gw-dsl-parser
         - lxml
         - griffe
         - holoviews >=1.17.0
@@ -66,11 +65,12 @@ outputs:
         - tiktoken
         - vl-convert-python
       run_constrained:
-        - llama-cpp-python >=0.3.0
-        - pygwalker >=0.4.9.11
+        - boto3 >=1.42.23
+        - sentence-transformers >=2.7.0
+        - transformers >=4.51.0
+        - llama-cpp-python >=0.3.15
+        - google-genai >=1.56.0
     test:
-      source_files:
-        - lumen/tests
       imports:
         - lumen
         - lumen.auth
@@ -81,19 +81,19 @@ outputs:
         - lumen.views
       requires:
         - pip
-        - pydantic
-        - duckdb
-        - griffe
-        - pydantic-extra-types
-        - jsonschema
-        - nbformat
+        - pytest
+        - pytest-rerunfailures
+        - pytest-asyncio
+        - pytest-xdist
+        - lxml
+        - sqlalchemy
+        - setuptools
       commands:
         - pip check
         - lumen --help
-        # - pytest lumen/tests -v
-        # Upstream tests (pytest lumen/tests -v) are disabled due to dependency version
-        # conflicts with pandas 2.3+/pyarrow StringDtype changes, dask 2024+ legacy API
-        # removal, and bokeh version incompatibilities between panel and dask requirements
+        # DuckDB 1.4.x does not accept pandas 3 string dtype ('str') in from_df(); skip those ingest tests.
+        # also drop optional_imports (they read source files from the sdist tree, not the installed package)
+        - pytest --pyargs lumen.tests -v -o asyncio_mode=auto -o asyncio_default_fixture_loop_scope=function -k "not optional_imports and not (test_single_csv_produces_one_table or test_multiple_files_produce_multiple_tables_in_one_source or test_file_format_parsing) and not test_param_to_pydantic_conversion"
     about:
       home: https://github.com/holoviz/lumen
       summary: Illuminate your data. A monitoring solution built on Panel
@@ -108,10 +108,10 @@ outputs:
       doc_url: https://lumen.holoviz.org/
       dev_url: https://github.com/holoviz/lumen
 
-  # Lumen with AI capabilities
+  # Lumen with AI capabilities - now an alias of lumen
   - name: {{ name }}-ai
     build:
-      skip: true  # [py<311 or win]
+      skip: true  # [py<311]
     requirements:
       host:
         - python
@@ -119,19 +119,13 @@ outputs:
       run:
         - python
         - {{ pin_subpackage('lumen', exact=True) }}
-        - griffe
-        - nbformat
-        - duckdb >=1.2.0
-        - pyarrow
-        - instructor >=1.14.3
-        - pydantic >=2.8.0
-        - pydantic-extra-types
-        - panel-graphic-walker >=0.6.4
-        - pygwalker >=0.4.9.11
-        - markitdown
-        - tiktoken
-        - chardet
-        - semchunk
+    test:
+      imports:
+        - lumen
+      requires:
+        - pip
+      commands:
+        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with AI capabilities
@@ -141,15 +135,22 @@ outputs:
   # Lumen with huggingface_hub for local AI models
   - name: {{ name|lower }}-ai-local
     build:
-      skip: true  # [py<311 or win]
+      skip: true  # [py<311]
     requirements:
       host:
         - python
       run:
         - python
-        - {{ pin_subpackage('lumen-ai', exact=True) }}
+        - {{ pin_subpackage('lumen', exact=True) }}
         - huggingface_hub
         - hf-xet
+    test:
+      imports:
+        - lumen
+      requires:
+        - pip
+      commands:
+        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with huggingface_hub for local AI models
@@ -159,13 +160,13 @@ outputs:
   # Lumen with OpenAI support
   - name: {{ name|lower }}-ai-openai
     build:
-      skip: true  # [py<311 or win]
+      skip: true  # [py<311]
     requirements:
       host:
         - python
       run:
         - python
-        - {{ pin_subpackage('lumen-ai', exact=True) }}
+        - {{ pin_subpackage('lumen', exact=True) }}
         - openai
     about:
       home: https://github.com/holoviz/lumen
@@ -176,7 +177,7 @@ outputs:
   # Lumen with MistralAI support
   - name: {{ name|lower }}-ai-mistralai
     build:
-      skip: true  # [py<311 or win]
+      skip: true  # [py<311]
     requirements:
       host:
         - python
@@ -184,26 +185,113 @@ outputs:
         - python
         - {{ pin_subpackage('lumen-ai', exact=True) }}
         - mistralai
+    test:
+      imports:
+        - lumen
+      requires:
+        - pip
+      commands:
+        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with MistralAI support
       license: BSD-3-Clause
       license_family: BSD
 
-  # Lumen with Anthropic support
-  - name: {{ name|lower }}-ai-anthropic
+  # Lumen with Bedrock support
+  - name: {{ name|lower }}-ai-bedrock
     build:
-      skip: true  # [py<311 or win]
+      skip: true  # [py<311]
     requirements:
       host:
         - python
       run:
         - python
-        - {{ pin_subpackage('lumen-ai', exact=True) }}
+        - {{ pin_subpackage('lumen', exact=True) }}
+        - boto3 >=1.42.23
+    test:
+      imports:
+        - lumen
+      requires:
+        - pip
+      commands:
+        - pip check
+    about:
+      home: https://github.com/holoviz/lumen
+      summary: Lumen with Bedrock support
+      license: BSD-3-Clause
+      license_family: BSD
+
+  # Lumen with Anthropic support
+  - name: {{ name|lower }}-ai-anthropic
+    build:
+      skip: true  # [py<311]
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - {{ pin_subpackage('lumen', exact=True) }}
         - anthropic
+    test:
+      imports:
+        - lumen
+      requires:
+        - pip
+      commands:
+        - pip check
     about:
       home: https://github.com/holoviz/lumen
       summary: Lumen with Anthropic support
+      license: BSD-3-Clause
+      license_family: BSD
+
+  # Lumen for embedding
+  - name: {{ name|lower }}-ai-transformers
+    build:
+      skip: true  # [py<311]
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - {{ pin_subpackage('lumen-ai-local', exact=True) }}
+        - sentence-transformers >=2.7.0
+        - transformers >=4.51.0
+    test:
+      imports:
+        - lumen
+      requires:
+        - pip
+      commands:
+        - pip check
+    about:
+      home: https://github.com/holoviz/lumen
+      summary: Lumen with embedding support
+      license: BSD-3-Clause
+      license_family: BSD
+
+  # Lumen with llama support
+  - name: {{ name|lower }}-ai-llama
+    build:
+      skip: true  # [py<311]
+    requirements:
+      host:
+        - python
+      run:
+        - python
+        - {{ pin_subpackage('lumen-ai-local', exact=True) }}
+        - llama-cpp-python >=0.3.15
+    test:
+      imports:
+        - lumen
+      requires:
+        - pip
+      commands:
+        - pip check
+    about:
+      home: https://github.com/holoviz/lumen
+      summary: Lumen with llama support
       license: BSD-3-Clause
       license_family: BSD
 
@@ -219,6 +307,13 @@ about:
   dev_url: https://github.com/holoviz/lumen
 
 extra:
+  # skips for easier handling of extras as outputs
+  skip-lints:
+    - missing_python_build_tool
+    - missing_tests
+    - missing_pip_check
+    - missing_imports_or_run_test_py
+    - wrong_output_script_key
   recipe-maintainers:
     - Hoxbro
     - philippjfr
