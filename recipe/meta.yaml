@@ -1,5 +1,5 @@
 {% set name = "lumen" %}
-{% set version = "1.2.1" %}
+{% set version = "1.3.0" %}
 
 # This recipe builds multiple outputs:
 # - lumen: The main package with core functionality
@@ -8,14 +8,13 @@
 # - lumen-ai-openai: Metapackage that adds OpenAI support
 # - lumen-ai-mistralai: Metapackage that adds MistralAI support
 # - lumen-ai-anthropic: Metapackage that adds Anthropic support
-
 package:
   name: {{ name }}-bundle
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 24d5a4f021ba62602c18885ed6b18478bf8132f2bed7a79b3fa3e27f7f4f7614
+  sha256: 2cc2fadbe413b2e7bedc49354cc7a74477f274f9193379840d4424df1ed6b78c
 
 build:
   number: 0
@@ -107,7 +106,6 @@ outputs:
       license_family: BSD
       doc_url: https://lumen.holoviz.org/
       dev_url: https://github.com/holoviz/lumen
-
   # Lumen with AI capabilities - now an alias of lumen
   - name: {{ name }}-ai
     build:
@@ -131,7 +129,6 @@ outputs:
       summary: Lumen with AI capabilities
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with huggingface_hub for local AI models
   - name: {{ name|lower }}-ai-local
     build:
@@ -156,7 +153,6 @@ outputs:
       summary: Lumen with huggingface_hub for local AI models
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with OpenAI support
   - name: {{ name|lower }}-ai-openai
     build:
@@ -173,7 +169,6 @@ outputs:
       summary: Lumen with OpenAI support
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with MistralAI support
   - name: {{ name|lower }}-ai-mistralai
     build:
@@ -197,7 +192,6 @@ outputs:
       summary: Lumen with MistralAI support
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with Bedrock support
   - name: {{ name|lower }}-ai-bedrock
     build:
@@ -221,7 +215,6 @@ outputs:
       summary: Lumen with Bedrock support
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with Anthropic support
   - name: {{ name|lower }}-ai-anthropic
     build:
@@ -245,7 +238,6 @@ outputs:
       summary: Lumen with Anthropic support
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen for embedding
   - name: {{ name|lower }}-ai-transformers
     build:
@@ -270,7 +262,6 @@ outputs:
       summary: Lumen with embedding support
       license: BSD-3-Clause
       license_family: BSD
-
   # Lumen with llama support
   - name: {{ name|lower }}-ai-llama
     build:
