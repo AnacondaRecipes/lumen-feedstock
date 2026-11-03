@@ -1,5 +1,5 @@
 {% set name = "lumen" %}
-{% set version = "1.3.0" %}
+{% set version = "1.4.0" %}
 
 # This recipe builds multiple outputs:
 # - lumen: The main package with core functionality
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 2cc2fadbe413b2e7bedc49354cc7a74477f274f9193379840d4424df1ed6b78c
+  sha256: 1e6f090d679275a10462df9bb299616732e7105bc6e0d289b63b7e774cba62da
 
 build:
   number: 0
