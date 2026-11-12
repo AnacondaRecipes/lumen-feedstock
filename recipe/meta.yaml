@@ -17,7 +17,7 @@ source:
   sha256: 1e6f090d679275a10462df9bb299616732e7105bc6e0d289b63b7e774cba62da
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   # Main lumen package
